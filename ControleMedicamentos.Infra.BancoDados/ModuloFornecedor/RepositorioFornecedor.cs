@@ -33,13 +33,46 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
                 );
 				SELECT SCOPE_IDENTITY()";
 
-        public string sqlEditar => "";
+        public string sqlEditar =>
+            @"UPDATE TBFORNECEDOR	
+                SET
+	                [NOME] = @NOME,
+                    [EMAIL] = @EMAIL,
+                    [TELEFONE] = @TELEFONE,
+                    [CIDADE] = @CIDADE,
+                    [ESTADO] = @ESTADO
+                WHERE
+	                [ID] = @ID;";
 
-        public string sqlExcluir => "";
+        public string sqlExcluir =>
+            @"DELETE FROM[TBFORNECEDOR]
 
-        public string sqlSelecionarTodos => "";
+                WHERE
+                    [ID] = @ID";
 
-        public string sqlSelecionarPorId => "";
+        public string sqlSelecionarTodos =>
+            @"SELECT
+	                FORNECEDOR.ID,
+	                FORNECEDOR.NOME,
+	                FORNECEDOR.TELEFONE,
+	                FORNECEDOR.EMAIL,
+	                FORNECEDOR.CIDADE,
+	                FORNECEDOR.ESTADO
+                
+                FROM TBFORNECEDOR AS FORNECEDOR";
+
+        public string sqlSelecionarPorId =>
+            @"SELECT
+	                FORNECEDOR.ID,
+	                FORNECEDOR.NOME,
+	                FORNECEDOR.TELEFONE,
+	                FORNECEDOR.EMAIL,
+	                FORNECEDOR.CIDADE,
+	                FORNECEDOR.ESTADO
+                
+                FROM TBFORNECEDOR AS FORNECEDOR
+
+                WHERE ID = @ID";
 
         public void ConfigurarParametrosFuncionario(Fornecedor novoFornecedor, SqlCommand comando)
         {
@@ -75,12 +108,46 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
 
         public ValidationResult Editar(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            var validador = new ValidadorFornecedor();
+
+            var resultadoValidacao = validador.Validate(fornecedor);
+
+            if (resultadoValidacao.IsValid == false)
+                return resultadoValidacao;
+
+            SqlConnection conexaoComBanco = new SqlConnection(enderecoBanco);
+
+            SqlCommand comandoEdicao = new SqlCommand(sqlEditar, conexaoComBanco);
+
+            ConfigurarParametrosFuncionario(fornecedor, comandoEdicao);
+
+            conexaoComBanco.Open();
+            comandoEdicao.ExecuteNonQuery();
+            conexaoComBanco.Close();
+
+            return resultadoValidacao;
         }
 
         public ValidationResult Excluir(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            SqlConnection conexaoComBanco = new SqlConnection(enderecoBanco);
+
+            SqlCommand comandoExclusao = new SqlCommand(sqlExcluir, conexaoComBanco);
+
+            comandoExclusao.Parameters.AddWithValue("ID", fornecedor.Id);
+
+            conexaoComBanco.Open();
+
+            int numeroRegistrosExcluidos = comandoExclusao.ExecuteNonQuery();
+
+            var resultadoValidacao = new ValidationResult();
+
+            if (numeroRegistrosExcluidos == 0)
+                resultadoValidacao.Errors.Add(new ValidationFailure("", "Não foi possível remover o registro"));
+
+            conexaoComBanco.Close();
+
+            return resultadoValidacao;
         }
 
         public ValidationResult Inserir(Fornecedor fornecedor)
@@ -99,7 +166,9 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
             ConfigurarParametrosFuncionario(fornecedor, comandoInsercao);
 
             conexaoComBanco.Open();
+
             var id = comandoInsercao.ExecuteScalar();
+
             fornecedor.Id = Convert.ToInt32(id);
 
             conexaoComBanco.Close();
@@ -109,12 +178,46 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
 
         public Fornecedor SelecionarPorId(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            SqlConnection conexaoComBanco = new SqlConnection(enderecoBanco);
+
+            SqlCommand comandoSelecao = new SqlCommand(sqlSelecionarPorId, conexaoComBanco);
+
+            comandoSelecao.Parameters.AddWithValue("ID", fornecedor.Id);
+
+            conexaoComBanco.Open();
+            SqlDataReader leitorFuncionario = comandoSelecao.ExecuteReader();
+
+            Fornecedor fornecedorSelecionado = null;
+
+            if (leitorFuncionario.Read())
+                fornecedorSelecionado = ConverterParaFuncionario(leitorFuncionario);
+
+            conexaoComBanco.Close();
+
+            return fornecedorSelecionado;
         }
 
         public List<Fornecedor> SelecionarTodos()
         {
-            throw new NotImplementedException();
+            SqlConnection conexaoComBanco = new SqlConnection(enderecoBanco);
+
+            SqlCommand comandoSelecao = new SqlCommand(sqlSelecionarTodos, conexaoComBanco);
+
+            conexaoComBanco.Open();
+            SqlDataReader leitorFornecedor = comandoSelecao.ExecuteReader();
+
+            List<Fornecedor> Fornecedors = new List<Fornecedor>();
+
+            while (leitorFornecedor.Read())
+            {
+                Fornecedor Fornecedor = ConverterParaFuncionario(leitorFornecedor);
+
+                Fornecedors.Add(Fornecedor);
+            }
+
+            conexaoComBanco.Close();
+
+            return Fornecedors;
         }
     }
 }
