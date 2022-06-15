@@ -11,6 +11,7 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
         public string Descricao { get; set; }
         public string Lote { get; set; }
         public DateTime Validade { get; set; }
+
         private int _quantidadeDisponivel;
         public int QuantidadeDisponivel 
         {
@@ -68,8 +69,8 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
                    Descricao == medicamento.Descricao  &&
                    Lote == medicamento.Lote  &&
                    Validade == medicamento.Validade  &&
-                   QuantidadeDisponivel == medicamento.QuantidadeDisponivel  &&
-                   medicamento.Fornecedor.Equals(Fornecedor);
+                   QuantidadeDisponivel == medicamento.QuantidadeDisponivel && 
+                   Fornecedor.Equals(medicamento.Fornecedor);
         }
 
         public override int GetHashCode()
