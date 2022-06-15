@@ -11,10 +11,11 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
         public string Descricao { get; set; }
         public string Lote { get; set; }
         public DateTime Validade { get; set; }
+        private int _quantidadeDisponivel;
         public int QuantidadeDisponivel 
         {
-            get { return QuantidadeDisponivel; } 
-            set { QuantidadeDisponivel += value; } 
+            get { return _quantidadeDisponivel; } 
+            private set { _quantidadeDisponivel = value; } 
         }
 
         private List<Requisicao> Requisicoes { get; set; }
@@ -23,12 +24,13 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
 
         public int QuantidadeRequisicoes { get { return Requisicoes.Count; } }
 
-        public Medicamento(string nome, string descricao, string lote, DateTime validade)
+        public Medicamento(string nome, string descricao, string lote, DateTime validade, int quantidadeDisponivel)
         {
             Nome = nome;
             Descricao = descricao;
             Lote = lote;
             Validade = validade;
+            QuantidadeDisponivel = quantidadeDisponivel;
             Requisicoes = new List<Requisicao>();
             Fornecedor = new Fornecedor();
         }

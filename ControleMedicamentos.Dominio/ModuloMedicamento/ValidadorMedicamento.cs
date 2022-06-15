@@ -17,8 +17,8 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
                 .NotEmpty().WithMessage("Campo 'Descricao' não pode ser vazio.")
                 .MinimumLength(10).WithMessage("Campo 'Descricao' deve conter pelo menos 10 digitos.");
 
-            RuleFor(x => x)
-                .Must(x => x.QuantidadeDisponivel > 0)
+            RuleFor(x => x.QuantidadeDisponivel)
+                .LessThan(0)
                 .WithMessage("Quantidade de medicamento deve ser maior que zero.");
 
         }

@@ -28,7 +28,7 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloMedicamento
         #region Métodos privados
         private static Medicamento CriaObjetoMedicamento()
         {
-            return new Medicamento("Dipirona", "descrição dipirona", "123", new DateTime(2022, 10, 10, 22, 35, 5));
+            return new Medicamento("Dipirona", "descrição dipirona", "123", new DateTime(2022, 10, 10, 22, 35, 5), 5);
         }
         #endregion
     }
