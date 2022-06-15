@@ -18,7 +18,7 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
                 .MinimumLength(10).WithMessage("Campo 'Descricao' deve conter pelo menos 10 digitos.");
 
             RuleFor(x => x.QuantidadeDisponivel)
-                .LessThan(0)
+                .GreaterThan(-1)
                 .WithMessage("Quantidade de medicamento deve ser maior que zero.");
 
         }
