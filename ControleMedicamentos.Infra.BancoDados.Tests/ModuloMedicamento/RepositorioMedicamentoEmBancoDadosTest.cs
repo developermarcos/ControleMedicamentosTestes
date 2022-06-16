@@ -12,9 +12,11 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
         [TestMethod]
         public void Deve_inserir_medicamento()
         {
-            repositorioFornecedor.Inserir(ObterFornecedor());
+            var medicamento = ObterMedicamento();
 
-            var validationResult = repositorioMedicamento.Inserir(ObterMedicamento());
+            repositorioFornecedor.Inserir(medicamento.Fornecedor);
+
+            var validationResult = repositorioMedicamento.Inserir(medicamento);
 
             Assert.AreEqual(true, validationResult.IsValid);
         }
@@ -24,7 +26,7 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
         {
             Medicamento medicamento = ObterMedicamento();
 
-            repositorioFornecedor.Inserir(ObterFornecedor());
+            repositorioFornecedor.Inserir(medicamento.Fornecedor);
 
             repositorioMedicamento.Inserir(medicamento);
 
