@@ -13,11 +13,35 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloaFuncionario
     {
         public RepositorioFuncionarioTest()
         {
-            string sql =
+            string sql1 =
+                @"DELETE FROM TBREQUISICAO;
+                  DBCC CHECKIDENT (TBREQUISICAO, RESEED, 0)";
+
+            Db.ExecutarSql(sql1);
+
+            string sql2 =
+                @"DELETE FROM TBMEDICAMENTO;
+                  DBCC CHECKIDENT (TBMEDICAMENTO, RESEED, 0)";
+
+            Db.ExecutarSql(sql2);
+
+            string sql3 =
+                @"DELETE FROM TBFORNECEDOR;
+                  DBCC CHECKIDENT (TBFORNECEDOR, RESEED, 0)";
+
+            Db.ExecutarSql(sql3);
+
+            string sql4 =
+                @"DELETE FROM TBPACIENTE;
+                  DBCC CHECKIDENT (TBPACIENTE, RESEED, 0)";
+
+            Db.ExecutarSql(sql4);
+
+            string sql5 =
                 @"DELETE FROM TBFUNCIONARIO;
                   DBCC CHECKIDENT (TBFUNCIONARIO, RESEED, 0)";
 
-            Db.ExecutarSql(sql);
+            Db.ExecutarSql(sql5);
         }
 
         [TestMethod]
