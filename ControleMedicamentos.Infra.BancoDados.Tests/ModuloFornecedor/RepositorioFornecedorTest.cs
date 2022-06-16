@@ -25,7 +25,7 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloFornecedor
 
             repositorioFornecedor.Inserir(fornecedor);
 
-            fornecedor.Nome= "Funcuinario nome Editar";
+            fornecedor.Nome= "Funcionario nome Editar";
 
             var validationResult = repositorioFornecedor.Editar(fornecedor);
             
