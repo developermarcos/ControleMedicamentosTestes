@@ -29,7 +29,8 @@ namespace ControleMedicamentos.Dominio.ModuloRequisicao
             }
             set
             {
-                _qtdMedicamento = value > Medicamento.QuantidadeDisponivel ? Medicamento.QuantidadeDisponivel : value;
+                if(Medicamento != null)
+                    _qtdMedicamento = value > Medicamento.QuantidadeDisponivel ? Medicamento.QuantidadeDisponivel : value;
             } 
         }
         public DateTime Data { get; set; }
