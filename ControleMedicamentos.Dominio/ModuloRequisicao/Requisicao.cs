@@ -2,12 +2,12 @@
 using ControleMedicamentos.Dominio.ModuloPaciente;
 using ControleMedicamentos.Dominio.ModuloFuncionario;
 using System;
-using System.Collections.Generic;
 
 namespace ControleMedicamentos.Dominio.ModuloRequisicao
 {
     public class Requisicao : EntidadeBase<Requisicao>
     {
+        public Requisicao() { }
         public Requisicao(Medicamento medicamento, Paciente paciente, int qtdMedicamento, DateTime data, Funcionario funcionario)
         {
             Medicamento=medicamento;
@@ -19,7 +19,19 @@ namespace ControleMedicamentos.Dominio.ModuloRequisicao
 
         public Medicamento Medicamento { get; set; }
         public Paciente Paciente { get; set; }
-        public int QtdMedicamento { get; set; }
+
+        private int _qtdMedicamento;
+        public int QtdMedicamento 
+        {   
+            get
+            { 
+                return _qtdMedicamento; 
+            }
+            set
+            {
+                _qtdMedicamento = value > Medicamento.QuantidadeDisponivel ? Medicamento.QuantidadeDisponivel : value;
+            } 
+        }
         public DateTime Data { get; set; }
         public Funcionario Funcionario { get; set; }
 
@@ -31,6 +43,20 @@ namespace ControleMedicamentos.Dominio.ModuloRequisicao
                    QtdMedicamento == requisicao.QtdMedicamento  &&
                    Data == requisicao.Data  &&
                    requisicao.Funcionario.Equals(Funcionario);
+        }
+
+        public override string ToString()
+        {
+            return $"ID: {Id} | Data: {Data} | Funcionario: {Funcionario.Nome} | Medicamento: {Medicamento.Nome} | Paciente: {Paciente.Nome}";
+        }
+
+        public void AtualizarRequisicao(Requisicao requisicao)
+        {
+            this.QtdMedicamento=requisicao.QtdMedicamento;
+            this.Data=requisicao.Data;
+            this.Funcionario.AtualizarRegistro(requisicao.Funcionario);
+            this.Paciente.AtualizarRegistro(requisicao.Paciente);
+            this.Medicamento.AtualizarRegistro(requisicao.Medicamento);
         }
 
     }

@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="ModuloFuncionario\**" />
-    <Compile Remove="ModuloRequisicao\**" />
     <EmbeddedResource Remove="ModuloFuncionario\**" />
-    <EmbeddedResource Remove="ModuloRequisicao\**" />
     <None Remove="ModuloFuncionario\**" />
-    <None Remove="ModuloRequisicao\**" />
   </ItemGroup>
 
   <ItemGroup>

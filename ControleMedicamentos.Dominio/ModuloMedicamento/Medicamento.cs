@@ -16,7 +16,7 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
         public int QuantidadeDisponivel 
         {
             get { return _quantidadeDisponivel; } 
-            private set { _quantidadeDisponivel = value; } 
+            set { _quantidadeDisponivel = value; } 
         }
 
         private List<Requisicao> Requisicoes { get; set; }
@@ -48,6 +48,7 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
             this.Descricao  = medicamento.Descricao;
             this.Lote  = medicamento.Lote;
             this.Validade  = medicamento.Validade;
+            this.QuantidadeDisponivel  = medicamento.QuantidadeDisponivel;
             this.Requisicoes = medicamento.Requisicoes;
             this.Fornecedor.AtualizarRegistro(medicamento.Fornecedor);
         }
@@ -64,13 +65,14 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
 
         public override bool Equals(object obj)
         {
-            return obj is Medicamento medicamento &&
+            bool saoIguais = obj is Medicamento medicamento &&
                    Nome == medicamento.Nome  &&
                    Descricao == medicamento.Descricao  &&
                    Lote == medicamento.Lote  &&
                    Validade == medicamento.Validade  &&
                    QuantidadeDisponivel == medicamento.QuantidadeDisponivel && 
                    Fornecedor.Equals(medicamento.Fornecedor);
+            return saoIguais;
         }
 
         public override int GetHashCode()
