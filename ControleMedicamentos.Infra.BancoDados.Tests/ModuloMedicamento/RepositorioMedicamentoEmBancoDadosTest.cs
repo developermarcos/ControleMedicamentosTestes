@@ -1,67 +1,20 @@
-using ControleMedicamento.Infra.BancoDados.ModuloMedicamento;
 using ControleMedicamentos.Dominio.ModuloMedicamento;
-using ControleFornecedors.Dominio.ModuloFornecedor;
-using ControleMedicamentos.Infra.BancoDados.Compartilhado;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using ControleMedicamentos.Infra.BancoDados.ModuloFornecedor;
-using ControleMedicamentos.Dominio.ModuloFornecedor;
 using System.Collections.Generic;
+using ControleMedicamentos.Infra.BancoDados.Tests.Compartilhado;
 
 namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
 {
     [TestClass]
-    public class RepositorioMedicamentoEmBancoDadosTest
+    public class RepositorioMedicamentoEmBancoDadosTest : BaseTest
     {
-        public RepositorioMedicamentoEmBancoDadosTest()
-        {
-            string sql1 =
-                @"DELETE FROM TBREQUISICAO;
-                  DBCC CHECKIDENT (TBREQUISICAO, RESEED, 0)";
-
-            Db.ExecutarSql(sql1);
-
-            string sql2 =
-                @"DELETE FROM TBMEDICAMENTO;
-                  DBCC CHECKIDENT (TBMEDICAMENTO, RESEED, 0)";
-
-            Db.ExecutarSql(sql2);
-
-            string sql3 =
-                @"DELETE FROM TBFORNECEDOR;
-                  DBCC CHECKIDENT (TBFORNECEDOR, RESEED, 0)";
-
-            Db.ExecutarSql(sql3);
-
-            string sql4 =
-                @"DELETE FROM TBPACIENTE;
-                  DBCC CHECKIDENT (TBPACIENTE, RESEED, 0)";
-
-            Db.ExecutarSql(sql4);
-
-            string sql5 =
-                @"DELETE FROM TBFUNCIONARIO;
-                  DBCC CHECKIDENT (TBFUNCIONARIO, RESEED, 0)";
-
-            Db.ExecutarSql(sql5);
-        }
         [TestMethod]
         public void Deve_inserir_medicamento()
         {
-            IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmBancoDados();
-            IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedor();
-            
-            Medicamento medicamento = ObterObjetoMedicamento();
+            repositorioFornecedor.Inserir(ObterFornecedor());
 
-            var resultado = repositorioFornecedor.Inserir(medicamento.Fornecedor);
-
-            if (!resultado.IsValid)
-            {
-                Assert.Fail("Erro ao inserir fornecedor");
-                return;
-            }
-            
-            var validationResult = repositorioMedicamento.Inserir(medicamento);
+            var validationResult = repositorioMedicamento.Inserir(ObterMedicamento());
 
             Assert.AreEqual(true, validationResult.IsValid);
         }
@@ -69,28 +22,19 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
         [TestMethod]
         public void Deve_editar_fornecedor()
         {
-            IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmBancoDados();
-            IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedor();
+            Medicamento medicamento = ObterMedicamento();
 
-            Medicamento medicamento = ObterObjetoMedicamento();
+            repositorioFornecedor.Inserir(ObterFornecedor());
 
-            var resultado = repositorioFornecedor.Inserir(medicamento.Fornecedor);
+            repositorioMedicamento.Inserir(medicamento);
 
-            if (!resultado.IsValid)
-            {
-                Assert.Fail("Erro ao inserir fornecedor");
-                return;
-            }
+            Medicamento medicamentoEditado = new Medicamento("Medicamento editado", "Descrição medicamento editado", "123", new DateTime(2022, 11, 10), 4);
 
-            var validationResult = repositorioMedicamento.Inserir(medicamento);
-
-            Fornecedor Fornecedor = new Fornecedor("Funcionario Inserir", "1234567891234565", "teste@teste.com", "Cidade", "Estado");
-            Medicamento medicamentoEditado = new Medicamento ("Medicamento editado", "Descrição medicamento editado", "123", new DateTime(2022, 11, 10), 4);
-            medicamentoEditado.Fornecedor = Fornecedor;
+            medicamentoEditado.Fornecedor = ObterFornecedor();
 
             medicamento.AtualizarRegistro(medicamentoEditado);
 
-            validationResult = repositorioMedicamento.Editar(medicamento);
+            var validationResult = repositorioMedicamento.Editar(medicamento);
 
             Assert.AreEqual(true, validationResult.IsValid);
         }
@@ -98,31 +42,26 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
         [TestMethod]
         public void Deve_selecionar_todos_registros_de_medicamento()
         {
-            IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmBancoDados();
-            IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedor();
-
-            Medicamento medicamentoInserir1 = ObterObjetoMedicamento();
-            Medicamento medicamentoInserir2 = ObterObjetoMedicamento();
-            Medicamento medicamentoInserir3 = ObterObjetoMedicamento();
-
+            Medicamento medicamentoInserir1 = ObterMedicamento();
+            
+            Medicamento medicamentoInserir2 = ObterMedicamento();
             medicamentoInserir2.Nome = "medicamento 2";
+            
+            Medicamento medicamentoInserir3 = ObterMedicamento();
             medicamentoInserir3.Nome = "medicamento 3";
 
-            List<Medicamento> funcionariosInserir = new List<Medicamento>();
-
-            funcionariosInserir.Add(medicamentoInserir1);
-            funcionariosInserir.Add(medicamentoInserir2);
-            funcionariosInserir.Add(medicamentoInserir3);
+            List<Medicamento> funcionariosInserir = new List<Medicamento> 
+            { 
+                medicamentoInserir1, 
+                medicamentoInserir2, 
+                medicamentoInserir3
+            };
 
             foreach (var item in funcionariosInserir)
-            {
                 repositorioFornecedor.Inserir(item.Fornecedor);
-            }
-
+            
             foreach (var item in funcionariosInserir)
-            {
                 repositorioMedicamento.Inserir(item);
-            }
 
             var todosFuncionarios = repositorioFornecedor.SelecionarTodos();
 
@@ -132,11 +71,7 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
         [TestMethod]
         public void Deve_selecionar_registro_de_medicamento_por_id()
         {
-            IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmBancoDados();
-
-            IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedor();
-
-            Medicamento medicamentoInserir = ObterObjetoMedicamento();
+            Medicamento medicamentoInserir = ObterMedicamento();
 
             repositorioFornecedor.Inserir(medicamentoInserir.Fornecedor);
 
@@ -150,11 +85,7 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
         [TestMethod]
         public void Deve_excluir_fornecedor()
         {
-            IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmBancoDados();
-
-            IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedor();
-
-            Medicamento medicamentoInserir = ObterObjetoMedicamento();
+            Medicamento medicamentoInserir = ObterMedicamento();
 
             repositorioFornecedor.Inserir(medicamentoInserir.Fornecedor);
 
@@ -166,17 +97,6 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
             }
 
             Assert.AreEqual(true, validationResult.IsValid);
-        }
-
-        private Medicamento ObterObjetoMedicamento()
-        {
-            Fornecedor Fornecedor = new Fornecedor("Funcionario Inserir", "1234567891234565", "teste@teste.com", "Cidade", "Estado");
-
-            Medicamento medicamento = new Medicamento("Medicamento Inserir", "Descricao inserir", "123", new DateTime(2022, 11, 10), 4);
-            
-            medicamento.Fornecedor = Fornecedor;
-
-            return medicamento;
         }
     }
 }
