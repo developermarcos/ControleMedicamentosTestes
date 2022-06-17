@@ -3,6 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using ControleMedicamentos.Infra.BancoDados.Tests.Compartilhado;
+using ControleMedicamentos.Dominio.ModuloRequisicao;
+using ControleMedicamentos.Dominio.ModuloPaciente;
+using ControleFornecedors.Dominio.ModuloFornecedor;
+using ControleMedicamentos.Dominio.ModuloFuncionario;
 
 namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
 {
@@ -99,6 +103,44 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
             }
 
             Assert.AreEqual(true, validationResult.IsValid);
+        }
+
+        [TestMethod]
+        public void Deve_selecionar_todas_requisicoes_de_um_medicamento()
+        {
+            Requisicao requisicao1 = ObterRequisicao();
+            requisicao1.Data = new DateTime(2022, 06, 20);
+            repositorioFornecedor.Inserir(requisicao1.Medicamento.Fornecedor);
+            repositorioFuncionario.Inserir(requisicao1.Funcionario);
+            repositorioPaciente.Inserir(requisicao1.Paciente);
+            repositorioMedicamento.Inserir(requisicao1.Medicamento);
+            repositorioRequisicao.Inserir(requisicao1);
+
+            requisicao1.Data = new DateTime(2022, 09, 23);
+            repositorioRequisicao.Inserir(requisicao1);
+
+            requisicao1.Data = new DateTime(2022, 07, 21);
+            requisicao1.Medicamento.Nome = "Medicamento 2";
+
+            repositorioMedicamento.Inserir(requisicao1.Medicamento);
+            repositorioRequisicao.Inserir(requisicao1);
+
+
+            requisicao1.Data = new DateTime(2022, 08, 22);
+            requisicao1.Medicamento.Nome = "Medicamento 3";
+
+            repositorioMedicamento.Inserir(requisicao1.Medicamento);
+            repositorioRequisicao.Inserir(requisicao1);
+
+
+            var medicamentoBuscar = ObterMedicamento();
+            medicamentoBuscar.Id = 1;
+
+            var medicamento = repositorioMedicamento.SelecionarPorId(medicamentoBuscar);
+
+            var medicamentoComRequisicoes = repositorioMedicamento.SelecionarRequisicoesMedicamento(medicamento);
+
+            Assert.AreEqual(2, medicamentoComRequisicoes.QuantidadeRequisicoes);
         }
     }
 }

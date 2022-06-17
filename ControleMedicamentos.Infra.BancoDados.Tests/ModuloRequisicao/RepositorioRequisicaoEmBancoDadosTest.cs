@@ -89,27 +89,33 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloRequisicao
             Requisicao requisicao1 = ObterRequisicao();
             Requisicao requisicao2 = ObterRequisicaoAlterada();
 
-            List<Paciente> pacientes = new List<Paciente>();
-            List<Fornecedor> fornecedores = new List<Fornecedor>();
-            List<Funcionario> funcionarios = new List<Funcionario>();
-            List<Medicamento> medicamentos = new List<Medicamento>();
-            List<Requisicao> requisicoes = new List<Requisicao>();
+            List<Paciente> pacientes = new List<Paciente>
+            {
+                requisicao1.Paciente,
+                requisicao2.Paciente
+            };
+            List<Fornecedor> fornecedores = new List<Fornecedor>
+            {
+                requisicao1.Medicamento.Fornecedor,
+                requisicao2.Medicamento.Fornecedor
+            };
+            List<Funcionario> funcionarios = new List<Funcionario>
+            {
+                requisicao1.Funcionario,
+                requisicao2.Funcionario
+            };
+            List<Medicamento> medicamentos = new List<Medicamento>
+            {
+                requisicao1.Medicamento,
+                requisicao2.Medicamento
+            };
+            List<Requisicao> requisicoes = new List<Requisicao>
+            {
+                requisicao1,
+                requisicao2
+            };
 
-            pacientes.Add(requisicao1.Paciente);
-            pacientes.Add(requisicao2.Paciente);
-
-            fornecedores.Add(requisicao1.Medicamento.Fornecedor);
-            fornecedores.Add(requisicao2.Medicamento.Fornecedor);
-
-            funcionarios.Add(requisicao1.Funcionario);
-            funcionarios.Add(requisicao2.Funcionario);
-
-            medicamentos.Add(requisicao1.Medicamento);
-            medicamentos.Add(requisicao2.Medicamento);
-
-            requisicoes.Add(requisicao1);
-            requisicoes.Add(requisicao2);
-
+            
             foreach(var item in pacientes)
                 repositorioPaciente.Inserir(item);
             

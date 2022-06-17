@@ -15,5 +15,7 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
         ValidationResult Excluir(Medicamento medicamento);
         List<Medicamento> SelecionarTodos();
         Medicamento SelecionarPorId(Medicamento medicamento);
+
+        Medicamento SelecionarRequisicoesMedicamento(Medicamento medicamento);
     }
 }
