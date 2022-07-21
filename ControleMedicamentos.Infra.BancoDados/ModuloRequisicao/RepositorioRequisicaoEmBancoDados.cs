@@ -11,6 +11,7 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
         protected override string sqlInserir =>
             @"INSERT INTO TBREQUISICAO 
                 (
+                    [ID],
                     [DATA],
                     [QUANTIDADEMEDICAMENTO],
                     [FUNCIONARIO_ID],
@@ -19,13 +20,13 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
 	            )
 	            VALUES
                 (
+                    @ID,
                     @DATA,
                     @QUANTIDADEMEDICAMENTO,
                     @FUNCIONARIO_ID,
                     @PACIENTE_ID,
                     @MEDICAMENTO_ID
-                );
-				SELECT SCOPE_IDENTITY()";
+                );";
 
         protected override string sqlEditar =>
             @"UPDATE [TBREQUISICAO]	
@@ -47,9 +48,9 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
         protected override string sqlSelecionarPorId =>
             @"
                 SELECT 
-	                    REQUISICAO.ID AS ID,
-	                    REQUISICAO.QUANTIDADEMEDICAMENTO AS QUANTIDADEMEDICAMENTO,
-	                    REQUISICAO.DATA AS DATA,
+	                    REQUISICAO.ID AS REQUISICAO_ID,
+	                    REQUISICAO.QUANTIDADEMEDICAMENTO AS REQUISICAO_QUANTIDADE_MEDICAMENTO,
+	                    REQUISICAO.DATA AS REQUISICAO_DATA,
 
 	                    FUNCIONARIO.ID AS FUNCIONARIO_ID,
 	                    FUNCIONARIO.NOME AS FUNCIONARIO_NOME,
@@ -65,7 +66,7 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
 	                    MEDICAMENTO.DESCRICAO AS MEDICAMENTO_DESCRICAO,
 	                    MEDICAMENTO.LOTE AS MEDICAMENTO_LOTE,
 	                    MEDICAMENTO.VALIDADE AS MEDICAMENTO_VALIDADE,
-	                    MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QTDDISPONIVEL,
+	                    MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QUANTIDADE_DISPONIVEL,
 
 	                    FORNECEDOR.ID AS FORNECEDOR_ID,
 	                    FORNECEDOR.NOME AS FORNECEDOR_NOME,
@@ -94,9 +95,9 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
         protected override string sqlSelecionarTodos =>
             @"
                 SELECT 
-	                    REQUISICAO.ID AS ID,
-	                    REQUISICAO.QUANTIDADEMEDICAMENTO AS QUANTIDADEMEDICAMENTO,
-	                    REQUISICAO.DATA AS DATA,
+	                    REQUISICAO.ID AS REQUISICAO_ID,
+	                    REQUISICAO.QUANTIDADEMEDICAMENTO AS REQUISICAO_QUANTIDADE_MEDICAMENTO,
+	                    REQUISICAO.DATA AS REQUISICAO_DATA,
 
 	                    FUNCIONARIO.ID AS FUNCIONARIO_ID,
 	                    FUNCIONARIO.NOME AS FUNCIONARIO_NOME,
@@ -112,7 +113,7 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
 	                    MEDICAMENTO.DESCRICAO AS MEDICAMENTO_DESCRICAO,
 	                    MEDICAMENTO.LOTE AS MEDICAMENTO_LOTE,
 	                    MEDICAMENTO.VALIDADE AS MEDICAMENTO_VALIDADE,
-	                    MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QTDDISPONIVEL,
+	                    MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QUANTIDADE_DISPONIVEL,
 
 	                    FORNECEDOR.ID AS FORNECEDOR_ID,
 	                    FORNECEDOR.NOME AS FORNECEDOR_NOME,

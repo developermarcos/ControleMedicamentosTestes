@@ -13,6 +13,7 @@ namespace ControleMedicamento.Infra.BancoDados.ModuloMedicamento
         protected override string sqlInserir =>
              @"INSERT INTO [TBMEDICAMENTO] 
                 (
+                    [ID],
                     [NOME],
                     [DESCRICAO],
                     [LOTE],
@@ -22,14 +23,14 @@ namespace ControleMedicamento.Infra.BancoDados.ModuloMedicamento
 	            )
 	            VALUES
                 (
+                    @ID,
                     @NOME,
                     @DESCRICAO,
                     @LOTE,
                     @VALIDADE,
                     @QUANTIDADEDISPONIVEL,
                     @FORNECEDOR_ID
-                );
-				SELECT SCOPE_IDENTITY()";
+                );";
 
         protected override string sqlEditar =>
             @"UPDATE [TBMEDICAMENTO]	
@@ -51,18 +52,18 @@ namespace ControleMedicamento.Infra.BancoDados.ModuloMedicamento
 
         protected override string sqlSelecionarTodos =>
             @"SELECT 
-	                MEDICAMENTO.ID,
-	                MEDICAMENTO.NOME,
-	                MEDICAMENTO.DESCRICAO,
-	                MEDICAMENTO.LOTE,
-	                MEDICAMENTO.VALIDADE,
-	                MEDICAMENTO.QUANTIDADEDISPONIVEL,
+	                MEDICAMENTO.ID AS MEDICAMENTO_ID,
+	                MEDICAMENTO.NOME AS MEDICAMENTO_NOME,
+	                MEDICAMENTO.DESCRICAO AS MEDICAMENTO_DESCRICAO,
+	                MEDICAMENTO.LOTE AS MEDICAMENTO_LOTE,
+	                MEDICAMENTO.VALIDADE AS MEDICAMENTO_VALIDADE,
+	                MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QUANTIDADE_DISPONIVEL,
 	                FORNECEDOR.ID AS FORNECEDOR_ID,
 	                FORNECEDOR.NOME AS FORNECEDOR_NOME,
-	                FORNECEDOR.EMAIL,
-	                FORNECEDOR.TELEFONE,
-	                FORNECEDOR.ESTADO,
-	                FORNECEDOR.CIDADE
+	                FORNECEDOR.EMAIL as FORNECEDOR_EMAIL,
+	                FORNECEDOR.TELEFONE as FORNECEDOR_TELEFONE,
+	                FORNECEDOR.ESTADO as FORNECEDOR_ESTADO,
+	                FORNECEDOR.CIDADE as FORNECEDOR_CIDADE
 
                 FROM TBMEDICAMENTO AS MEDICAMENTO
 
@@ -72,18 +73,18 @@ namespace ControleMedicamento.Infra.BancoDados.ModuloMedicamento
 
         protected override string sqlSelecionarPorId =>
              @"SELECT 
-	                MEDICAMENTO.ID,
-	                MEDICAMENTO.NOME,
-	                MEDICAMENTO.DESCRICAO,
-	                MEDICAMENTO.LOTE,
-	                MEDICAMENTO.VALIDADE,
-	                MEDICAMENTO.QUANTIDADEDISPONIVEL,
+	                MEDICAMENTO.ID AS MEDICAMENTO_ID,
+	                MEDICAMENTO.NOME AS MEDICAMENTO_NOME,
+	                MEDICAMENTO.DESCRICAO AS MEDICAMENTO_DESCRICAO,
+	                MEDICAMENTO.LOTE AS MEDICAMENTO_LOTE,
+	                MEDICAMENTO.VALIDADE AS MEDICAMENTO_VALIDADE,
+	                MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QUANTIDADE_DISPONIVEL,
 	                FORNECEDOR.ID AS FORNECEDOR_ID,
 	                FORNECEDOR.NOME AS FORNECEDOR_NOME,
-	                FORNECEDOR.EMAIL,
-	                FORNECEDOR.TELEFONE,
-	                FORNECEDOR.ESTADO,
-	                FORNECEDOR.CIDADE
+	                FORNECEDOR.EMAIL as FORNECEDOR_EMAIL,
+	                FORNECEDOR.TELEFONE as FORNECEDOR_TELEFONE,
+	                FORNECEDOR.ESTADO as FORNECEDOR_ESTADO,
+	                FORNECEDOR.CIDADE as FORNECEDOR_CIDADE
 
                 FROM TBMEDICAMENTO AS MEDICAMENTO
 
@@ -114,7 +115,7 @@ namespace ControleMedicamento.Infra.BancoDados.ModuloMedicamento
 	                    MEDICAMENTO.DESCRICAO AS MEDICAMENTO_DESCRICAO,
 	                    MEDICAMENTO.LOTE AS MEDICAMENTO_LOTE,
 	                    MEDICAMENTO.VALIDADE AS MEDICAMENTO_VALIDADE,
-	                    MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QTDDISPONIVEL,
+	                    MEDICAMENTO.QUANTIDADEDISPONIVEL AS MEDICAMENTO_QUANTIDADE_DISPONIVEL,
 
 	                    FORNECEDOR.ID AS FORNECEDOR_ID,
 	                    FORNECEDOR.NOME AS FORNECEDOR_NOME,

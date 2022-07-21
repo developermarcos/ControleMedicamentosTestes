@@ -18,10 +18,10 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFuncionario
 
         public override Funcionario ConverterRegistro(SqlDataReader leitorRegistro)
         {
-            int id = Convert.ToInt32(leitorRegistro["ID"]);
-            string nome = Convert.ToString(leitorRegistro["NOME"]);
-            string login = Convert.ToString(leitorRegistro["LOGIN"]);
-            string senha = Convert.ToString(leitorRegistro["SENHA"]);
+            Guid id = Guid.Parse(leitorRegistro["FUNCIONARIO_ID"].ToString());
+            string nome = Convert.ToString(leitorRegistro["FUNCIONARIO_NOME"]);
+            string login = Convert.ToString(leitorRegistro["FUNCIONARIO_LOGIN"]);
+            string senha = Convert.ToString(leitorRegistro["FUNCIONARIO_SENHA"]);
 
             var funcionario = new Funcionario
             {

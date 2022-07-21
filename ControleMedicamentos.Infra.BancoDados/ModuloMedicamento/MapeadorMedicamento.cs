@@ -1,6 +1,7 @@
 ﻿using ControleFornecedors.Dominio.ModuloFornecedor;
 using ControleMedicamentos.Dominio.ModuloMedicamento;
 using ControleMedicamentos.Infra.BancoDados.Compartilhado;
+using ControleMedicamentos.Infra.BancoDados.ModuloFornecedor;
 using System;
 using System.Data.SqlClient;
 
@@ -8,6 +9,11 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloMedicamento
 {
     public class MapeadorMedicamento : MapeadorBase<Medicamento>
     {
+        MapeadorFornecedor mapeadorFornecedor;
+        public MapeadorMedicamento() 
+        {
+            mapeadorFornecedor = new MapeadorFornecedor();
+        }
         public override void ConfigurarParametros(Medicamento registro, SqlCommand comando)
         {
             comando.Parameters.AddWithValue("ID", registro.Id);
@@ -21,28 +27,14 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloMedicamento
 
         public override Medicamento ConverterRegistro(SqlDataReader leitorRegistro)
         {
-            int id = Convert.ToInt32(leitorRegistro["ID"]);
-            string nome = Convert.ToString(leitorRegistro["NOME"]);
-            string login = Convert.ToString(leitorRegistro["DESCRICAO"]);
-            string lote = Convert.ToString(leitorRegistro["LOTE"]);
-            DateTime validade = Convert.ToDateTime(leitorRegistro["VALIDADE"]);
-            int quantidadeDisponivel = Convert.ToInt32(leitorRegistro["QUANTIDADEDISPONIVEL"]);
-            int fornecedor_id = Convert.ToInt32(leitorRegistro["FORNECEDOR_ID"]);
-            string fornecedor_nome = Convert.ToString(leitorRegistro["FORNECEDOR_NOME"]);
-            string fornecedor_telefone = Convert.ToString(leitorRegistro["TELEFONE"]);
-            string fornecedor_email = Convert.ToString(leitorRegistro["EMAIL"]);
-            string fornecedor_cidade = Convert.ToString(leitorRegistro["CIDADE"]);
-            string fornecedor_estado = Convert.ToString(leitorRegistro["ESTADO"]);
+            Guid id = Guid.Parse(leitorRegistro["MEDICAMENTO_ID"].ToString());
+            string nome = Convert.ToString(leitorRegistro["MEDICAMENTO_NOME"]);
+            string login = Convert.ToString(leitorRegistro["MEDICAMENTO_DESCRICAO"]);
+            string lote = Convert.ToString(leitorRegistro["MEDICAMENTO_LOTE"]);
+            DateTime validade = Convert.ToDateTime(leitorRegistro["MEDICAMENTO_VALIDADE"]);
+            int quantidadeDisponivel = Convert.ToInt32(leitorRegistro["MEDICAMENTO_QUANTIDADE_DISPONIVEL"]);
 
-            var fornecedor = new Fornecedor
-            {
-                Id = fornecedor_id,
-                Nome = fornecedor_nome,
-                Telefone = fornecedor_telefone,
-                Email = fornecedor_email,
-                Cidade = fornecedor_cidade,
-                Estado = fornecedor_estado
-            };
+            var fornecedor = mapeadorFornecedor.ConverterRegistro(leitorRegistro);
 
             var funcionario = new Medicamento(nome, login, lote, validade, quantidadeDisponivel);
 

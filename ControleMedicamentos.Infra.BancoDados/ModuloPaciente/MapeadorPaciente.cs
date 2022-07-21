@@ -20,9 +20,9 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloPaciente
 
         public override Paciente ConverterRegistro(SqlDataReader leitorRegistro)
         {
-            int id = Convert.ToInt32(leitorRegistro["ID"]);
-            string nome = Convert.ToString(leitorRegistro["NOME"]);
-            string cartaosus = Convert.ToString(leitorRegistro["CARTAOSUS"]);
+            Guid id = Guid.Parse(leitorRegistro["PACIENTE_ID"].ToString());
+            string nome = Convert.ToString(leitorRegistro["PACIENTE_NOME"]);
+            string cartaosus = Convert.ToString(leitorRegistro["PACIENTE_CARTAOSUS"]);
 
             var paciente = new Paciente
             {

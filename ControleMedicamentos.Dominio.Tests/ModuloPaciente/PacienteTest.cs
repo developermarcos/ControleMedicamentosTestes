@@ -36,23 +36,10 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloPaciente
         }
 
         [TestMethod]
-        public void Representacao_objeto()
-        {
-            Paciente paciente = new Paciente();
-
-            paciente.Id = 1;
-            paciente.Nome = "Nome";
-            paciente.CartaoSUS = "CartaoSUS123";
-
-            Assert.AreEqual("Id: 1 | Nome: Nome | CartaoSUS: CartaoSUS123", paciente.ToString());
-        }
-
-        [TestMethod]
         public void Contrutor_vazio()
         {
             Paciente paciente = new Paciente();
 
-            Assert.AreEqual(0, paciente.Id);
             Assert.AreEqual(null, paciente.Nome);
             Assert.AreEqual(null, paciente.CartaoSUS);
         }
@@ -62,7 +49,6 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloPaciente
         {
             Paciente paciente = new Paciente("Nome", "123");
 
-            Assert.AreEqual(0, paciente.Id);
             Assert.AreEqual("Nome", paciente.Nome);
             Assert.AreEqual("123", paciente.CartaoSUS);
         }

@@ -19,12 +19,12 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
 
         public override Fornecedor ConverterRegistro(SqlDataReader leitorRegistro)
         {
-            int id = Convert.ToInt32(leitorRegistro["ID"]);
-            string nome = Convert.ToString(leitorRegistro["NOME"]);
-            string email = Convert.ToString(leitorRegistro["EMAIL"]);
-            string telefone = Convert.ToString(leitorRegistro["TELEFONE"]);
-            string cidade = Convert.ToString(leitorRegistro["CIDADE"]);
-            string estado = Convert.ToString(leitorRegistro["ESTADO"]);
+            Guid id = Guid.Parse(leitorRegistro["FORNECEDOR_ID"].ToString());
+            string nome = Convert.ToString(leitorRegistro["FORNECEDOR_NOME"]);
+            string email = Convert.ToString(leitorRegistro["FORNECEDOR_EMAIL"]);
+            string telefone = Convert.ToString(leitorRegistro["FORNECEDOR_TELEFONE"]);
+            string cidade = Convert.ToString(leitorRegistro["FORNECEDOR_CIDADE"]);
+            string estado = Convert.ToString(leitorRegistro["FORNECEDOR_ESTADO"]);
 
             var funcionario = new Fornecedor
             {

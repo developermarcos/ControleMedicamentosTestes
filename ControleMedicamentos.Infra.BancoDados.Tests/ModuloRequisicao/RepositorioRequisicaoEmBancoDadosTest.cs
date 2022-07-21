@@ -49,10 +49,10 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloRequisicao
 
             requisicao.AtualizarRequisicao(requisicaoAlterada);
 
-            repositorioPaciente.Inserir(requisicao.Paciente);
-            repositorioFornecedor.Inserir(requisicao.Medicamento.Fornecedor);
-            repositorioFuncionario.Inserir(requisicao.Funcionario);
-            repositorioMedicamento.Inserir(requisicao.Medicamento);
+            repositorioPaciente.Editar(requisicao.Paciente);
+            repositorioFornecedor.Editar(requisicao.Medicamento.Fornecedor);
+            repositorioFuncionario.Editar(requisicao.Funcionario);
+            repositorioMedicamento.Editar(requisicao.Medicamento);
 
             
             validationResult = repositorioRequisicao.Editar(requisicao);

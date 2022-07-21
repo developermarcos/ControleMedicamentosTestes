@@ -69,24 +69,13 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloFornecedor
 
             Assert.AreEqual("estado_alterado", fornecedor.Estado);
         }
-        [TestMethod]
-        public void Repesentacao_do_objeto()
-        {
-            var fornecedorAlterado = new Fornecedor();
-
-            fornecedorAlterado.Id = 1;
-            fornecedorAlterado.Nome = "Nome";
-            fornecedorAlterado.Telefone = "Telefone";
-
-            Assert.AreEqual("Numero: 1 | Nome: Nome | Telefone: Telefone", fornecedorAlterado.ToString());
-        }
+        
 
         [TestMethod]
         public void Construtor_vazio()
         {
             var fornecedorAlterado = new Fornecedor();
 
-            Assert.AreEqual(0, fornecedorAlterado.Id);
             Assert.AreEqual(null, fornecedorAlterado.Nome);
             Assert.AreEqual(null, fornecedorAlterado.Telefone);
             Assert.AreEqual(null, fornecedorAlterado.Email);
@@ -98,7 +87,6 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloFornecedor
         {
             var fornecedorAlterado = new Fornecedor("Nome", "Telefone", "Email", "Cidade", "Estado");
 
-            Assert.AreEqual(0, fornecedorAlterado.Id);
             Assert.AreEqual("Nome", fornecedorAlterado.Nome);
             Assert.AreEqual("Telefone", fornecedorAlterado.Telefone);
             Assert.AreEqual("Email", fornecedorAlterado.Email);

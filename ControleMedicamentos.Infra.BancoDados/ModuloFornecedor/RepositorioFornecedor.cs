@@ -14,6 +14,7 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
         protected override string sqlInserir =>
             @"INSERT INTO TBFORNECEDOR
                 (
+                    [ID],
                     [NOME],
                     [EMAIL],
                     [TELEFONE],
@@ -22,13 +23,13 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
 	            )
 	            VALUES
                 (
+                    @ID,
                     @NOME,
                     @EMAIL,
                     @TELEFONE,
                     @CIDADE,
                     @ESTADO
-                );
-				SELECT SCOPE_IDENTITY()";
+                );";
 
         protected override string sqlEditar =>
             @"UPDATE TBFORNECEDOR	
@@ -49,12 +50,12 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
 
         protected override string sqlSelecionarPorId =>
             @"SELECT
-	                FORNECEDOR.ID,
-	                FORNECEDOR.NOME,
-	                FORNECEDOR.TELEFONE,
-	                FORNECEDOR.EMAIL,
-	                FORNECEDOR.CIDADE,
-	                FORNECEDOR.ESTADO
+	                FORNECEDOR.ID as FORNECEDOR_ID,
+	                FORNECEDOR.NOME as FORNECEDOR_NOME,
+	                FORNECEDOR.TELEFONE as FORNECEDOR_TELEFONE,
+	                FORNECEDOR.EMAIL as FORNECEDOR_EMAIL,
+	                FORNECEDOR.CIDADE as FORNECEDOR_CIDADE,
+	                FORNECEDOR.ESTADO as FORNECEDOR_ESTADO
                 
                 FROM TBFORNECEDOR AS FORNECEDOR
 
@@ -62,12 +63,12 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
 
         protected override string sqlSelecionarTodos =>
             @"SELECT
-	                FORNECEDOR.ID,
-	                FORNECEDOR.NOME,
-	                FORNECEDOR.TELEFONE,
-	                FORNECEDOR.EMAIL,
-	                FORNECEDOR.CIDADE,
-	                FORNECEDOR.ESTADO
+	                FORNECEDOR.ID as FORNECEDOR_ID,
+	                FORNECEDOR.NOME as FORNECEDOR_NOME,
+	                FORNECEDOR.TELEFONE as FORNECEDOR_TELEFONE,
+	                FORNECEDOR.EMAIL as FORNECEDOR_EMAIL,
+	                FORNECEDOR.CIDADE as FORNECEDOR_CIDADE,
+	                FORNECEDOR.ESTADO as FORNECEDOR_ESTADO
                 
                 FROM TBFORNECEDOR AS FORNECEDOR";
     }

@@ -30,19 +30,15 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.Compartilhado
         {
             string sql =
                 @"DELETE FROM TBREQUISICAO;
-                  DBCC CHECKIDENT (TBREQUISICAO, RESEED, 0)
-
+                  
                 DELETE FROM TBMEDICAMENTO;
-                  DBCC CHECKIDENT (TBMEDICAMENTO, RESEED, 0)
-
+                  
                 DELETE FROM TBFORNECEDOR;
-                  DBCC CHECKIDENT (TBFORNECEDOR, RESEED, 0)
-                
+                  
                 DELETE FROM TBPACIENTE;
-                  DBCC CHECKIDENT (TBPACIENTE, RESEED, 0)
-
-                DELETE FROM TBFUNCIONARIO;
-                  DBCC CHECKIDENT (TBFUNCIONARIO, RESEED, 0)";
+                  
+                DELETE FROM TBFUNCIONARIO;";
+                  
 
             Db.ExecutarSql(sql);
 

@@ -110,6 +110,7 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
         {
             Requisicao requisicao1 = ObterRequisicao();
             requisicao1.Data = new DateTime(2022, 06, 20);
+
             repositorioFornecedor.Inserir(requisicao1.Medicamento.Fornecedor);
             repositorioFuncionario.Inserir(requisicao1.Funcionario);
             repositorioPaciente.Inserir(requisicao1.Paciente);
@@ -134,8 +135,7 @@ namespace ControleMedicamento.Infra.BancoDados.Tests.ModuloMedicamento
 
 
             var medicamentoBuscar = ObterMedicamento();
-            medicamentoBuscar.Id = 1;
-
+            
             var medicamento = repositorioMedicamento.SelecionarPorId(medicamentoBuscar);
 
             var medicamentoComRequisicoes = repositorioMedicamento.SelecionarRequisicoesMedicamento(medicamento);

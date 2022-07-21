@@ -12,17 +12,18 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFuncionario
         protected override string sqlInserir =>
              @"INSERT INTO TBFUNCIONARIO 
                 (
+                    [ID],
                     [NOME],
                     [LOGIN],
                     [SENHA]
 	            )
 	            VALUES
                 (
+                    @ID,
                     @NOME,
                     @LOGIN,
                     @SENHA
-                );
-				SELECT SCOPE_IDENTITY()";
+                );";
 
         protected override string sqlEditar =>
             @"UPDATE TBFUNCIONARIO	
@@ -41,10 +42,10 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFuncionario
         
         protected override string sqlSelecionarPorId =>
             @"SELECT 
-	                FUNCIONARIO.ID,
-	                FUNCIONARIO.NOME,
-	                FUNCIONARIO.LOGIN,
-	                FUNCIONARIO.SENHA
+	                FUNCIONARIO.ID as FUNCIONARIO_ID,
+	                FUNCIONARIO.NOME as FUNCIONARIO_NOME,
+	                FUNCIONARIO.LOGIN as FUNCIONARIO_LOGIN,
+	                FUNCIONARIO.SENHA as FUNCIONARIO_SENHA
 
                 FROM TBFUNCIONARIO AS FUNCIONARIO
 
@@ -52,10 +53,10 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFuncionario
 
         protected override string sqlSelecionarTodos =>
             @"SELECT 
-	                FUNCIONARIO.ID,
-	                FUNCIONARIO.NOME,
-	                FUNCIONARIO.LOGIN,
-	                FUNCIONARIO.SENHA
+	                FUNCIONARIO.ID as FUNCIONARIO_ID,
+	                FUNCIONARIO.NOME as FUNCIONARIO_NOME,
+	                FUNCIONARIO.LOGIN as FUNCIONARIO_LOGIN,
+	                FUNCIONARIO.SENHA as FUNCIONARIO_SENHA
 
                 FROM TBFUNCIONARIO AS FUNCIONARIO;";
     }

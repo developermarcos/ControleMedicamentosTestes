@@ -48,9 +48,9 @@ namespace ControleMedicamentos.Infra.BancoDados.Compartilhado
             mapeador.ConfigurarParametros(registro, comandoInsercao);
 
             conexaoComBanco.Open();
-            var id = comandoInsercao.ExecuteScalar();
-            registro.Id = Convert.ToInt32(id);
-
+            
+            comandoInsercao.ExecuteNonQuery();
+            
             conexaoComBanco.Close();
 
             return resultadoValidacao;

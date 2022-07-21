@@ -12,15 +12,16 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloPaciente
         protected override string sqlInserir => 
             @"INSERT INTO TBPACIENTE 
                 (
+                    [ID],
                     [NOME],
                     [CARTAOSUS]
 	            )
 	            VALUES
                 (
+                    @ID,
                     @NOME,
                     @CARTAOSUS
-                );
-				SELECT SCOPE_IDENTITY()";
+                );";
 
         protected override string sqlEditar =>
             @"UPDATE TBPACIENTE	
@@ -38,17 +39,17 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloPaciente
 
         protected override string sqlSelecionarPorId =>
             @"SELECT 
-                 PACIENTE.ID,
-                 PACIENTE.NOME,
-                 PACIENTE.CARTAOSUS
+                 PACIENTE.ID AS PACIENTE_ID,
+                 PACIENTE.NOME AS PACIENTE_NOME,
+                 PACIENTE.CARTAOSUS AS PACIENTE_CARTAOSUS
 
                 FROM TBPACIENTE AS PACIENTE;";
 
         protected override string sqlSelecionarTodos =>
             @"SELECT 
-                 PACIENTE.ID,
-                 PACIENTE.NOME,
-                 PACIENTE.CARTAOSUS
+                 PACIENTE.ID AS PACIENTE_ID,
+                 PACIENTE.NOME AS PACIENTE_NOME,
+                 PACIENTE.CARTAOSUS AS PACIENTE_CARTAOSUS
 
                 FROM TBPACIENTE AS PACIENTE;";
     }
